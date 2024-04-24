@@ -190,7 +190,7 @@ const Playground = () => {
           style={{ color: 'white' }}
           href="https://github.com/totem-technologies/solid-boring-avatars"
         >
-          playground repository
+          GitHub repository
         </a>
       </Banner>
       <Header>

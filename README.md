@@ -8,7 +8,7 @@ Boring avatars is a tiny JavaScript Solidjs library that generates custom, SVG-b
 
 </a>
 
-![boring avatars preview](https://github.com/totem-technologies/solid-boring-avatars/blob/master/solid-boring-avatars.jpg?raw=true)
+![boring avatars preview](https://github.com/totem-technologies/solid-boring-avatars/blob/master/solid-boring-avatars.png?raw=true)
 
 ## Install
 

@@ -1,5 +1,5 @@
 import colors from 'nice-color-palettes/1000.json'
-import { Component, For, createEffect, createSignal } from 'solid-js'
+import { Component, For, JSXElement, createEffect, createSignal } from 'solid-js'
 import { styled } from 'solid-styled-components'
 import Avatar from '../src'
 import { exampleNames } from './example-names'
@@ -81,18 +81,6 @@ const AvatarWrapper = (props: {
   const handleFocus = (
     event: FocusEvent & { currentTarget: HTMLInputElement; target: HTMLInputElement },
   ) => event.target.select()
-  const [copyValue, setCopyValue] = createSignal(props.name)
-
-  createEffect(() => {
-    // if (ref.current) {
-    //   const svgNode = ref.current.innerHTML
-    //   const svgStart = svgNode.indexOf('<svg')
-    //   const svgEnd = svgNode.indexOf('</svg>') + 6
-    //   const svgResult = svgNode.substring(svgStart, svgEnd).toString()
-    //   setCopyValue(svgResult)
-    // }
-    // console.log('name', avatarName())
-  })
 
   return (
     <AvatarContainer>
@@ -124,8 +112,7 @@ const avatarSizes = {
 
 const SizeDotWrapper: Component<{
   isSelected: boolean
-  icon?: Element
-  children: Element
+  icon?: JSXElement
   onClick: () => void
 }> = styled(Button)`
   ${p =>
@@ -143,7 +130,7 @@ const Dot: Component<{ size: number }> = styled.div`
   border-radius: 10rem;
 `
 
-const SizeDot = props => {
+const SizeDot = (props: { size: number; isSelected: boolean; onClick: () => void }) => {
   const getSize = () => {
     switch (props.size) {
       case avatarSizes.small:
@@ -156,7 +143,7 @@ const SizeDot = props => {
         return 0
     }
   }
-  return <SizeDotWrapper isSelected={props.isSelected} icon={<Dot size={getSize()} />} {...props} />
+  return <SizeDotWrapper icon={<Dot size={getSize()} />} {...props} />
 }
 
 const variants = {
@@ -172,11 +159,11 @@ const Playground = () => {
   const defaultPlaygroundColors = paletteColors[493]
   const [playgroundColors, setPlaygroundColors] = createSignal(defaultPlaygroundColors!)
 
-  const [dotColor0, setDotColor0] = createSignal(playgroundColors()[0])
-  const [dotColor1, setDotColor1] = createSignal(playgroundColors()[1])
-  const [dotColor2, setDotColor2] = createSignal(playgroundColors()[2])
-  const [dotColor3, setDotColor3] = createSignal(playgroundColors()[3])
-  const [dotColor4, setDotColor4] = createSignal(playgroundColors()[4])
+  const [dotColor0, setDotColor0] = createSignal(playgroundColors()[0] as string)
+  const [dotColor1, setDotColor1] = createSignal(playgroundColors()[1] as string)
+  const [dotColor2, setDotColor2] = createSignal(playgroundColors()[2] as string)
+  const [dotColor3, setDotColor3] = createSignal(playgroundColors()[3] as string)
+  const [dotColor4, setDotColor4] = createSignal(playgroundColors()[4] as string)
 
   const filteredColors = () => [dotColor0(), dotColor1(), dotColor2(), dotColor3(), dotColor4()]
 
@@ -185,35 +172,30 @@ const Playground = () => {
   }
 
   createEffect(() => {
-    setDotColor0(playgroundColors()[0])
-    setDotColor1(playgroundColors()[1])
-    setDotColor2(playgroundColors()[2])
-    setDotColor3(playgroundColors()[3])
-    setDotColor4(playgroundColors()[4])
+    setDotColor0(playgroundColors()[0] as string)
+    setDotColor1(playgroundColors()[1] as string)
+    setDotColor2(playgroundColors()[2] as string)
+    setDotColor3(playgroundColors()[3] as string)
+    setDotColor4(playgroundColors()[4] as string)
   })
 
   const [avatarSize, setAvatarSize] = createSignal(avatarSizes.medium)
   const [variant, setVariant] = createSignal(variants.beam)
   const [isSquare, setSquare] = createSignal(false)
 
-  // createEffect(() => {
-  // console.log('variant', variant())
-  // console.log('avatarSize', avatarSize())
-  // console.log('isSquare', isSquare())
-  // })
-
   return (
     <>
       <BaseStyles />
       <Banner>
-        This is a playground to test local changes and not the one used in{' '}
+        This is a a fork of the original Boring Avatars , but for Solidjs. You can find the original
+        at{' '}
         <a style={{ color: 'white' }} href="https://boringavatars.com">
           boringavatars.com
         </a>{' '}
         . For suggestions, issues or PR's go to the{' '}
         <a
           style={{ color: 'white' }}
-          href="http://www.github.com/boringdesigners/boring-avatars-playground"
+          href="https://github.com/totem-technologies/solid-boring-avatars"
         >
           playground repository
         </a>

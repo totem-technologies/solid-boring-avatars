@@ -1,4 +1,4 @@
-import { createUniqueId } from 'solid-js'
+import { createMemo, createUniqueId } from 'solid-js'
 import { getRandomColor, hashCode } from '../utilities'
 
 const SIZE = 90
@@ -6,7 +6,7 @@ const COLORS = 5
 
 function generateColors(colors: string[], name: string) {
   const numFromName = hashCode(name)
-  const range = colors && colors.length
+  const range = colors.length
   const colorsShuffle = Array.from({ length: COLORS }, (_, i) =>
     getRandomColor(numFromName + i, colors, range),
   )
@@ -31,7 +31,7 @@ const AvatarRing = (props: {
   title?: string
   square?: boolean
 }) => {
-  const ringColors = () => generateColors(props.colors, props.name)
+  const ringColors = createMemo(() => generateColors(props.colors, props.name))
   const maskID = createUniqueId()
 
   return (

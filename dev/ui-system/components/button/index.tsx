@@ -33,12 +33,7 @@ const ButtonWrapper: Component<{
 
 const Button = (props: { icon?: JSXElement; children: JSXElement; onClick: () => void }) => {
   return (
-    <ButtonWrapper
-      icon={props.icon}
-      hasChildren={props.children}
-      onClick={props.onClick}
-      {...props}
-    >
+    <ButtonWrapper icon={props.icon} hasChildren={props.children} {...props}>
       {props.children}
       {props.icon && props.icon}
     </ButtonWrapper>

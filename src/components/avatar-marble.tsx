@@ -1,4 +1,4 @@
-import { createUniqueId } from 'solid-js'
+import { createMemo, createUniqueId } from 'solid-js'
 import { getRandomColor, getUnit, hashCode } from '../utilities'
 
 const ELEMENTS = 3
@@ -37,7 +37,7 @@ const AvatarMarble = (props: {
   title: any
   square: boolean
 }) => {
-  const properties = () => generateColors(props.name, props.colors)
+  const properties = createMemo(() => generateColors(props.name, props.colors))
   const maskID = createUniqueId()
 
   return (

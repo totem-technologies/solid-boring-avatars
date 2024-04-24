@@ -1,4 +1,4 @@
-import { createUniqueId } from 'solid-js'
+import { createMemo, createUniqueId } from 'solid-js'
 import { getRandomColor, hashCode } from '../utilities'
 
 const ELEMENTS = 64
@@ -22,7 +22,7 @@ const AvatarPixel = (props: {
   title?: string
   square?: boolean
 }) => {
-  const pixelColors = () => generateColors(props.name, props.colors)
+  const pixelColors = createMemo(() => generateColors(props.name, props.colors))
   const maskID = createUniqueId()
 
   return (

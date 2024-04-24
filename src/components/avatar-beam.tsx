@@ -1,4 +1,4 @@
-import { Component, createUniqueId } from 'solid-js'
+import { Component, createMemo, createUniqueId } from 'solid-js'
 import { getBoolean, getContrast, getRandomColor, getUnit, hashCode } from '../utilities'
 
 const SIZE = 36
@@ -41,7 +41,7 @@ const AvatarBeam: Component<{
   title: string
   square?: boolean
 }> = props => {
-  const data = () => generateData(props.name, props.colors)
+  const data = createMemo(() => generateData(props.name, props.colors))
   const maskID = createUniqueId()
 
   return (

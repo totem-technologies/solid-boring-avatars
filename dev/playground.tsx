@@ -101,7 +101,7 @@ const AvatarWrapper = (props: {
           name={avatarName()}
           colors={props.playgroundColors}
           size={props.size}
-          variant={variants[props.variant as keyof typeof variants]}
+          variant={props.variant}
           square={props.square}
         />
       </AvatarSection>

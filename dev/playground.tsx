@@ -83,16 +83,16 @@ const AvatarWrapper = (props: {
   ) => event.target.select()
   const [copyValue, setCopyValue] = createSignal(props.name)
 
-  // createEffect(() => {
-  //   if (ref.current) {
-  //     const svgNode = ref.current.innerHTML
-  //     const svgStart = svgNode.indexOf('<svg')
-  //     const svgEnd = svgNode.indexOf('</svg>') + 6
-  //     const svgResult = svgNode.substring(svgStart, svgEnd).toString()
-
-  //     setCopyValue(svgResult)
-  //   }
-  // })
+  createEffect(() => {
+    // if (ref.current) {
+    //   const svgNode = ref.current.innerHTML
+    //   const svgStart = svgNode.indexOf('<svg')
+    //   const svgEnd = svgNode.indexOf('</svg>') + 6
+    //   const svgResult = svgNode.substring(svgStart, svgEnd).toString()
+    //   setCopyValue(svgResult)
+    // }
+    // console.log('name', avatarName())
+  })
 
   return (
     <AvatarContainer>
@@ -107,7 +107,7 @@ const AvatarWrapper = (props: {
       </AvatarSection>
       <Input
         value={avatarName()}
-        onChange={e => setAvatarName(e.target.value)}
+        onInput={e => setAvatarName(e.target.value)}
         onFocus={e => handleFocus(e)}
       />
     </AvatarContainer>
@@ -123,11 +123,12 @@ const avatarSizes = {
 }
 
 const SizeDotWrapper: Component<{ isSelected: boolean }> = styled(Button)`
-  ${p => p.isSelected && `background-color: var(--c-background)`};
-  ${p => !p.isSelected && `color: var(--c-fade)`};
+  ${p =>
+    p.isSelected ? `background-color: var(--c-background)` : `background-color: transparent`};
+  ${p => (!p.isSelected ? `color: var(--c-fade)` : ``)};
 
   &:hover {
-    ${p => p.isSelected && `background-color: var(--c-background)`};
+    ${p => (p.isSelected ? `background-color: var(--c-background)` : '')};
   }
 `
 
@@ -173,10 +174,10 @@ const Playground = () => {
   const [dotColor3, setDotColor3] = createSignal(playgroundColors()[3])
   const [dotColor4, setDotColor4] = createSignal(playgroundColors()[4])
 
-  const filteredColors = [dotColor0(), dotColor1(), dotColor2(), dotColor3(), dotColor4()]
+  const filteredColors = () => [dotColor0(), dotColor1(), dotColor2(), dotColor3(), dotColor4()]
 
   const handleRandomColors = () => {
-    setPlaygroundColors(paletteColors[getRandomPaletteIndex()])
+    setPlaygroundColors(paletteColors[getRandomPaletteIndex()] as string[])
   }
 
   createEffect(() => {
@@ -191,11 +192,11 @@ const Playground = () => {
   const [variant, setVariant] = createSignal(variants.beam)
   const [isSquare, setSquare] = createSignal(false)
 
-  createEffect(() => {
-    console.log('variant', variant())
-    console.log('avatarSize', avatarSize())
-    console.log('isSquare', isSquare())
-  })
+  // createEffect(() => {
+  // console.log('variant', variant())
+  // console.log('avatarSize', avatarSize())
+  // console.log('isSquare', isSquare())
+  // })
 
   return (
     <>
@@ -235,7 +236,7 @@ const Playground = () => {
         </ColorsSection>
 
         <Button onClick={() => handleRandomColors()}>Random palette</Button>
-        <Button onClick={() => setSquare(!isSquare)}>{isSquare() ? 'Round' : 'Square'}</Button>
+        <Button onClick={() => setSquare(!isSquare())}>{isSquare() ? 'Round' : 'Square'}</Button>
         <SegmentGroup>
           <For each={Object.entries(avatarSizes)}>
             {([key, value], index) => (
@@ -254,7 +255,7 @@ const Playground = () => {
             size={avatarSize()}
             square={isSquare()}
             name={exampleName}
-            playgroundColors={filteredColors as string[]}
+            playgroundColors={filteredColors() as string[]}
             variant={variant()}
           />
         ))}

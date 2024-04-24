@@ -26,7 +26,7 @@ const AvatarBauhaus = (props: {
   title: any
   square: any
 }) => {
-  const properties = generateColors(props.name, props.colors) as any
+  const properties = () => generateColors(props.name, props.colors) as any
   const maskID = createUniqueId()
 
   return (
@@ -43,20 +43,20 @@ const AvatarBauhaus = (props: {
         <rect width={SIZE} height={SIZE} rx={props.square ? undefined : SIZE * 2} fill="#FFFFFF" />
       </mask>
       <g mask={`url(#${maskID})`}>
-        <rect width={SIZE} height={SIZE} fill={properties[0].color} />
+        <rect width={SIZE} height={SIZE} fill={properties()[0].color} />
         <rect
           x={(SIZE - 60) / 2}
           y={(SIZE - 20) / 2}
           width={SIZE}
-          height={properties[1].isSquare ? SIZE : SIZE / 8}
-          fill={properties[1].color}
+          height={properties()[1].isSquare ? SIZE : SIZE / 8}
+          fill={properties()[1].color}
           transform={
             'translate(' +
-            properties[1].translateX +
+            properties()[1].translateX +
             ' ' +
-            properties[1].translateY +
+            properties()[1].translateY +
             ') rotate(' +
-            properties[1].rotate +
+            properties()[1].rotate +
             ' ' +
             SIZE / 2 +
             ' ' +
@@ -67,9 +67,11 @@ const AvatarBauhaus = (props: {
         <circle
           cx={SIZE / 2}
           cy={SIZE / 2}
-          fill={properties[2].color}
+          fill={properties()[2].color}
           r={SIZE / 5}
-          transform={'translate(' + properties[2].translateX + ' ' + properties[2].translateY + ')'}
+          transform={
+            'translate(' + properties()[2].translateX + ' ' + properties()[2].translateY + ')'
+          }
         />
         <line
           x1={0}
@@ -77,14 +79,14 @@ const AvatarBauhaus = (props: {
           x2={SIZE}
           y2={SIZE / 2}
           stroke-width={2}
-          stroke={properties[3].color}
+          stroke={properties()[3].color}
           transform={
             'translate(' +
-            properties[3].translateX +
+            properties()[3].translateX +
             ' ' +
-            properties[3].translateY +
+            properties()[3].translateY +
             ') rotate(' +
-            properties[3].rotate +
+            properties()[3].rotate +
             ' ' +
             SIZE / 2 +
             ' ' +

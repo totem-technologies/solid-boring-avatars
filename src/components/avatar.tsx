@@ -1,4 +1,4 @@
-import { JSX, Match, Switch, mergeProps } from 'solid-js'
+import { Match, Switch, mergeProps } from 'solid-js'
 import AvatarBauhaus from './avatar-bauhaus'
 import AvatarBeam from './avatar-beam'
 import AvatarMarble from './avatar-marble'
@@ -9,7 +9,14 @@ import AvatarSunset from './avatar-sunset'
 const variants = ['pixel', 'bauhaus', 'ring', 'beam', 'sunset', 'marble']
 const deprecatedVariants = { geometric: 'beam', abstract: 'bauhaus' }
 
-const Avatar = props => {
+const Avatar = (props: {
+  variant?: string
+  name?: string
+  colors?: string[]
+  square?: boolean
+  size?: number
+  title?: string
+}) => {
   const avatarProps = mergeProps(
     {
       variant: 'marble',
@@ -22,28 +29,35 @@ const Avatar = props => {
     props,
   )
   const checkedVariant = () => {
-    if (Object.keys(deprecatedVariants).includes(props.variant)) {
+    if (Object.keys(deprecatedVariants).includes(avatarProps.variant)) {
       return deprecatedVariants[props.variant as keyof typeof deprecatedVariants]
     }
-    if (variants.includes(props.variant)) {
+    if (variants.includes(avatarProps.variant)) {
       return props.variant
     }
     return 'marble'
   }
-  const avatars: { [key: string]: JSX.Element } = {
-    pixel: <AvatarPixel {...avatarProps} />,
-    bauhaus: <AvatarBauhaus {...avatarProps} />,
-    ring: <AvatarRing {...avatarProps} />,
-    beam: <AvatarBeam {...avatarProps} />,
-    sunset: <AvatarSunset {...avatarProps} />,
-    marble: <AvatarMarble {...avatarProps} />,
-  }
   // return avatars[checkedVariant()]
   return (
     <Switch fallback={<AvatarMarble {...avatarProps} />}>
-      {Object.keys(avatars).map(key => (
-        <Match when={checkedVariant() === key}>{avatars[key]}</Match>
-      ))}
+      <Match when={checkedVariant() === 'pixel'}>
+        <AvatarPixel {...avatarProps}></AvatarPixel>
+      </Match>
+      <Match when={checkedVariant() === 'bauhaus'}>
+        <AvatarBauhaus {...avatarProps}></AvatarBauhaus>
+      </Match>
+      <Match when={checkedVariant() === 'ring'}>
+        <AvatarRing {...avatarProps}></AvatarRing>
+      </Match>
+      <Match when={checkedVariant() === 'beam'}>
+        <AvatarBeam {...avatarProps}></AvatarBeam>
+      </Match>
+      <Match when={checkedVariant() === 'sunset'}>
+        <AvatarSunset {...avatarProps}></AvatarSunset>
+      </Match>
+      <Match when={checkedVariant() === 'marble'}>
+        <AvatarMarble {...avatarProps}></AvatarMarble>
+      </Match>
     </Switch>
   )
 }

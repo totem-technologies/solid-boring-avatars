@@ -85,6 +85,7 @@
     "pnpm": ">=8.6.0"
   },
   "dependencies": {
+    "@tiagotrindade/solid-colorful": "^1.0.2",
     "nice-color-palettes": "^3.0.0",
     "solid-styled-components": "^0.28.5"
   }

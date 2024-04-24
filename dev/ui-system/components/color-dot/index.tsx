@@ -1,5 +1,3 @@
-// import { ChromePicker } from 'react-color'
-import { Show, createSignal } from 'solid-js'
 import { styled } from 'solid-styled-components'
 
 const DotWrapper = styled.div`
@@ -18,23 +16,15 @@ const PickerWrapper = styled.div`
   top: 2rem;
 `
 
-const ColorDot = ({ value, onChange }) => {
-  const [pickerIsOpen, setPickerIsOpen] = createSignal(false)
-
+const ColorDot = props => {
   return (
-    <DotWrapper>
-      <Wrapper
-        color={value}
-        onClick={() => setPickerIsOpen(!pickerIsOpen)}
-        style={{ background: value }}
-      />
-      <Show when={pickerIsOpen()} fallback={<div>color picker</div>}>
-        <PickerWrapper>
-          {/* <ChromePicker color={value} onChange={v => onChange(v.hex)} disableAlpha /> */}
-          color picker
-        </PickerWrapper>
-      </Show>
-    </DotWrapper>
+    <input
+      type="color"
+      name="color"
+      class={`${Wrapper.class}`}
+      value={props.value}
+      onInput={e => props.onChange(e.currentTarget.value)}
+    />
   )
 }
 

@@ -41,7 +41,7 @@ const AvatarBeam: Component<{
   title: string
   square?: boolean
 }> = props => {
-  const data = generateData(props.name, props.colors)
+  const data = () => generateData(props.name, props.colors)
   const maskID = createUniqueId()
 
   return (
@@ -58,7 +58,7 @@ const AvatarBeam: Component<{
         <rect width={SIZE} height={SIZE} rx={props.square ? undefined : SIZE * 2} fill="#FFFFFF" />
       </mask>
       <g mask={`url(#${maskID})`}>
-        <rect width={SIZE} height={SIZE} fill={data.backgroundColor} />
+        <rect width={SIZE} height={SIZE} fill={data().backgroundColor} />
         <rect
           x="0"
           y="0"
@@ -66,30 +66,30 @@ const AvatarBeam: Component<{
           height={SIZE}
           transform={
             'translate(' +
-            data.wrapperTranslateX +
+            data().wrapperTranslateX +
             ' ' +
-            data.wrapperTranslateY +
+            data().wrapperTranslateY +
             ') rotate(' +
-            data.wrapperRotate +
+            data().wrapperRotate +
             ' ' +
             SIZE / 2 +
             ' ' +
             SIZE / 2 +
             ') scale(' +
-            data.wrapperScale +
+            data().wrapperScale +
             ')'
           }
-          fill={data.wrapperColor}
-          rx={data.isCircle ? SIZE : SIZE / 6}
+          fill={data().wrapperColor}
+          rx={data().isCircle ? SIZE : SIZE / 6}
         />
         <g
           transform={
             'translate(' +
-            data.faceTranslateX +
+            data().faceTranslateX +
             ' ' +
-            data.faceTranslateY +
+            data().faceTranslateY +
             ') rotate(' +
-            data.faceRotate +
+            data().faceRotate +
             ' ' +
             SIZE / 2 +
             ' ' +
@@ -97,36 +97,36 @@ const AvatarBeam: Component<{
             ')'
           }
         >
-          {data.isMouthOpen ? (
+          {data().isMouthOpen ? (
             <path
-              d={'M15 ' + (19 + data.mouthSpread) + 'c2 1 4 1 6 0'}
-              stroke={data.faceColor}
+              d={'M15 ' + (19 + data().mouthSpread) + 'c2 1 4 1 6 0'}
+              stroke={data().faceColor}
               fill="none"
               stroke-linecap="round"
             />
           ) : (
             <path
-              d={'M13,' + (19 + data.mouthSpread) + ' a1,0.75 0 0,0 10,0'}
-              fill={data.faceColor}
+              d={'M13,' + (19 + data().mouthSpread) + ' a1,0.75 0 0,0 10,0'}
+              fill={data().faceColor}
             />
           )}
           <rect
-            x={14 - data.eyeSpread}
+            x={14 - data().eyeSpread}
             y={14}
             width={1.5}
             height={2}
             rx={1}
             stroke="none"
-            fill={data.faceColor}
+            fill={data().faceColor}
           />
           <rect
-            x={20 + data.eyeSpread}
+            x={20 + data().eyeSpread}
             y={14}
             width={1.5}
             height={2}
             rx={1}
             stroke="none"
-            fill={data.faceColor}
+            fill={data().faceColor}
           />
         </g>
       </g>

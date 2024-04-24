@@ -9,7 +9,12 @@ const SegmentGroupWrapper = styled.div`
   display: inline-flex;
 `
 
-const SegmentWrapper: Component<{ isSelected: boolean }> = styled(Button)`
+const SegmentWrapper: Component<{
+  isSelected: boolean
+  icon?: JSX.Element
+  children: JSX.Element
+  onClick: () => void
+}> = styled(Button)`
   &:not(:hover) {
     background-color: ${p => (p.isSelected ? `var(--c-background)` : `transparent`)};
   }

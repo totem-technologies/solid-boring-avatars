@@ -16,7 +16,7 @@ const PickerWrapper = styled.div`
   top: 2rem;
 `
 
-const ColorDot = props => {
+const ColorDot = (props: { value: string; onChange: (arg0: string) => void }) => {
   return (
     <input
       type="color"

@@ -8,11 +8,11 @@ import { BaseStyles, Button, ColorDot, Segment, SegmentGroup } from './ui-system
 const paletteColors = colors
 
 const Header = styled('div')`
-  display: grid;
-  grid-template-columns: auto 1fr auto auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-m);
   padding: var(--pagePadding);
   align-items: center;
-  grid-gap: var(--sp-s);
 `
 
 const ColorsSection = styled('div')`
@@ -122,11 +122,15 @@ const avatarSizes = {
   large: 128,
 }
 
-const SizeDotWrapper: Component<{ isSelected: boolean }> = styled(Button)`
+const SizeDotWrapper: Component<{
+  isSelected: boolean
+  icon?: Element
+  children: Element
+  onClick: () => void
+}> = styled(Button)`
   ${p =>
     p.isSelected ? `background-color: var(--c-background)` : `background-color: transparent`};
   ${p => (!p.isSelected ? `color: var(--c-fade)` : ``)};
-
   &:hover {
     ${p => (p.isSelected ? `background-color: var(--c-background)` : '')};
   }

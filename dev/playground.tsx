@@ -74,7 +74,7 @@ const AvatarWrapper = (props: {
   name: string
   playgroundColors: string[]
   size: number
-  variant: string
+  variant: keyof typeof Avatar.Variants
   square?: boolean
 }) => {
   const [avatarName, setAvatarName] = createSignal(props.name)
@@ -146,14 +146,7 @@ const SizeDot = (props: { size: number; isSelected: boolean; onClick: () => void
   return <SizeDotWrapper icon={<Dot size={getSize()} />} {...props} />
 }
 
-const variants = {
-  beam: 'beam',
-  bauhaus: 'bauhaus',
-  ring: 'ring',
-  sunset: 'sunset',
-  pixel: 'pixel',
-  marble: 'marble',
-}
+const variants = Avatar.Variants
 
 const Playground = () => {
   const defaultPlaygroundColors = paletteColors[493]
@@ -180,7 +173,7 @@ const Playground = () => {
   })
 
   const [avatarSize, setAvatarSize] = createSignal(avatarSizes.medium)
-  const [variant, setVariant] = createSignal(variants.beam)
+  const [variant, setVariant] = createSignal<keyof typeof variants>(variants.beam)
   const [isSquare, setSquare] = createSignal(false)
 
   return (
@@ -202,10 +195,10 @@ const Playground = () => {
       </Banner>
       <Header>
         <SegmentGroup>
-          <For each={Object.keys(variants)}>
+          <For each={Object.values(variants)}>
             {variantItem => (
               <Segment
-                onClick={() => setVariant(variants[variantItem as keyof typeof variants])}
+                onClick={() => setVariant(variantItem)}
                 isSelected={variantItem === variant()}
               >
                 {variantItem}

@@ -6,11 +6,19 @@ import AvatarPixel from './avatar-pixel'
 import AvatarRing from './avatar-ring'
 import AvatarSunset from './avatar-sunset'
 
-const variants = ['pixel', 'bauhaus', 'ring', 'beam', 'sunset', 'marble']
-const deprecatedVariants = { geometric: 'beam', abstract: 'bauhaus' }
+// const variants = ['pixel', 'bauhaus', 'ring', 'beam', 'sunset', 'marble'] as const
+
+const Variants = {
+  pixel: 'pixel',
+  bauhaus: 'bauhaus',
+  ring: 'ring',
+  beam: 'beam',
+  sunset: 'sunset',
+  marble: 'marble',
+} as const
 
 const Avatar = (props: {
-  variant?: string
+  variant?: keyof typeof Variants
   name?: string
   colors?: string[]
   square?: boolean
@@ -28,38 +36,30 @@ const Avatar = (props: {
     },
     props,
   )
-  const checkedVariant = () => {
-    if (Object.keys(deprecatedVariants).includes(avatarProps.variant)) {
-      return deprecatedVariants[props.variant as keyof typeof deprecatedVariants]
-    }
-    if (variants.includes(avatarProps.variant)) {
-      return props.variant
-    }
-    return 'marble'
-  }
-  // return avatars[checkedVariant()]
   return (
     <Switch fallback={<AvatarMarble {...avatarProps} />}>
-      <Match when={checkedVariant() === 'pixel'}>
+      <Match when={props.variant === 'pixel'}>
         <AvatarPixel {...avatarProps}></AvatarPixel>
       </Match>
-      <Match when={checkedVariant() === 'bauhaus'}>
+      <Match when={props.variant === 'bauhaus'}>
         <AvatarBauhaus {...avatarProps}></AvatarBauhaus>
       </Match>
-      <Match when={checkedVariant() === 'ring'}>
+      <Match when={props.variant === 'ring'}>
         <AvatarRing {...avatarProps}></AvatarRing>
       </Match>
-      <Match when={checkedVariant() === 'beam'}>
+      <Match when={props.variant === 'beam'}>
         <AvatarBeam {...avatarProps}></AvatarBeam>
       </Match>
-      <Match when={checkedVariant() === 'sunset'}>
+      <Match when={props.variant === 'sunset'}>
         <AvatarSunset {...avatarProps}></AvatarSunset>
       </Match>
-      <Match when={checkedVariant() === 'marble'}>
+      <Match when={props.variant === 'marble'}>
         <AvatarMarble {...avatarProps}></AvatarMarble>
       </Match>
     </Switch>
   )
 }
+
+Avatar.Variants = Variants
 
 export default Avatar

@@ -15,19 +15,17 @@ type ElementProperties = {
 function generateColors(name: string, colors: string[]) {
   const numFromName = hashCode(name)
   const range = colors.length
-
-  const elementsProperties: [ElementProperties, ElementProperties, ElementProperties] = Array.from(
-    { length: ELEMENTS },
-    (_, i) => ({
-      color: getRandomColor(numFromName + i, colors, range) as string,
+  const elementsProperties = Array(ELEMENTS)
+  for (let i = 0; i < ELEMENTS; i++) {
+    elementsProperties[i] = {
+      color: getRandomColor(numFromName + i, colors, range),
       translateX: getUnit(numFromName * (i + 1), SIZE / 10, 1),
       translateY: getUnit(numFromName * (i + 1), SIZE / 10, 2),
       scale: 1.2 + getUnit(numFromName * (i + 1), SIZE / 20) / 10,
       rotate: getUnit(numFromName * (i + 1), 360, 1),
-    }),
-  ) as [ElementProperties, ElementProperties, ElementProperties]
-
-  return elementsProperties
+    }
+  }
+  return elementsProperties as [ElementProperties, ElementProperties, ElementProperties]
 }
 
 const AvatarMarble = (props: {

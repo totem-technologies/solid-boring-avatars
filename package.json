@@ -1,6 +1,6 @@
 {
   "name": "@totem.org/solid-boring-avatars",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Boring avatars is a JavaScript SolidJS library that generates custom, SVG-based avatars from any username and color palette.",
   "license": "MIT",
   "author": "blopker",
